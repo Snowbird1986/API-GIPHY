@@ -1,0 +1,16 @@
+.jumbotron {
+    background-image: url(../images/images.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+body {
+    background-image: url(../images/background.gif);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+#jumboTitle {
+    color:whitesmoke
+}
+#title {
+    color:whitesmoke    
+}
