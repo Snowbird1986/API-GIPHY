@@ -14,3 +14,17 @@ body {
 #title {
     color:whitesmoke    
 }
+p {
+    color:whitesmoke
+}
+.searchTerm {
+    margin: 10px;
+    background-color: lightgreen
+}
+.col-md-3 {
+    margin-top: 50px;
+}
+img {
+    width: 100%;
+    height: 100%
+}

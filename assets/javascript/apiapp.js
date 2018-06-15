@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    var searchTerms = []
+    var searchTerms = ["Scooby Doo", "Scrappy Doo", "Shaggy", "Velma"]
     function renderButtons() {
         $("#buttons-view").empty();
         console.log(searchTerms)
@@ -35,12 +35,16 @@ $(document).ready(function(){
         renderButtons()
         // console.log(searchTerms)
     });
+    renderButtons()
     $(document).on("click", ".searchTerm", displayGifInfo);
 
     function displayGifInfo() {
+        $("#gif-view").empty()
+        var apiKey = "h2f6IXCo3mXRzSMW20a1kPEtYFm5lQMP"
 
         var searchTerm = $(this).attr("data-name");
-        var queryURL = "https://www.omdbapi.com/?t=" + searchTerm + "&y=&plot=short&apikey=trilogy";
+        var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + searchTerm + "&apikey="+apiKey+"&limit=10";
+        console.log(queryURL)
 
         // Creates AJAX call for the specific movie button being clicked
         $.ajax({
@@ -49,14 +53,37 @@ $(document).ready(function(){
         }).then(function(response) {
 
           // YOUR CODE GOES HERE!!!
-          $("#movies-view").empty();
-          $("#movies-view").append('<div> Rating: '+response.Rated);
-          $("#movies-view").append('<div> Released: '+response.Released);
-          $("#movies-view").append('<div> Plot: '+response.Plot);
-          $("#movies-view").append('<img src='+response.Poster+'>');
+          console.log(response)
+          var results = response.data
 
+          // ========================
+  
+          for (var i = 0; i < results.length; i++) {
+            var searcDiv = $("<div>").addClass("col-md-3")
+            var p = $("<p>").text("Rating: " + results[i].rating);
+            var searchImage = $("<img>").attr("src", results[i].images.fixed_height_still.url).attr("data-still",results[i].images.fixed_height_still.url).attr("data-animate",results[i].images.fixed_height.url).attr("data-state","still").addClass("gif")
+            searcDiv.append(p);
+            searcDiv.append(searchImage);
+            $("#gif-view").prepend(searcDiv)
+
+
+        }
         });
+    };
+        $(document).on("click", ".gif", function() {
+            var state = $(this).attr("data-state")
+            console.log($(this).attr("data-state"))
+            if(state=="still"){
+                $(this).attr("src", $(this).attr("data-animate"));
+                $(this).attr("data-state", "animate");
+              }
+              else {
+                $(this).attr("src", $(this).attr("data-still"));
+                $(this).attr("data-state", "still");
+              }
 
-      }
+      });
 });
+
+
 
